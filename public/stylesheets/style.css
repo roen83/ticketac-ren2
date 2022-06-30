@@ -1,8 +1,20 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 100vh;
+  background: rgb(28,156,200);
+  background: linear-gradient(0deg, rgba(28,156,200,1) 0%, rgba(195,226,255,1) 100%);
 }
 
-a {
-  color: #00B7FF;
+.navbar{
+  padding:0px ;
+  color: black !important;
+  font-weight: 600;
+  
 }
+
+.home {
+  height: 70vh;
+}
+
+
+
