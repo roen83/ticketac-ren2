@@ -18,7 +18,7 @@
         <!-- Brand -->
         <div class="container-fluid d-flex align-items-center">
         <img src="/images/train.png" width="25" height="25" class="logo" alt="">
-        <a class="navbar-brand pl-2 text-dark" href="#">Ticketac</a>
+        <a class="navbar-brand pl-2 text-dark" href="/home">Ticketac</a>
 
         <!-- Toggler/collapsibe Button -->
 
@@ -31,9 +31,11 @@
 
         <div class=" container-fluid collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link text-dark" aria-current="page" href="/users/sign-out">Sign-out</a>
-            </li>
+            <% if (session != null) { %>
+              <li class="nav-item">
+                <a class="nav-link text-danger" aria-current="page" href="/users/sign-out">Sign-out</a>
+              </li>
+            <% } %>
             <li class="nav-item">
               <a class="nav-link text-dark" href="#">My Last Trips</a>
             </li>

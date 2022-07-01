@@ -30,7 +30,10 @@ router.get('/checkout', function(req, res, next){
 /* GET myLastTrips page */
 router.get('/myLastTrips', function(req,res,next){
   console.log("myLastTrips détecté");
-  res.render('myLastTrips', {});
+  var trips = [
+    {  "_id": {    "$oid": "62bd6c24fd5db53a2c9510f6"  },  "departureCity": "Nantes",  "arrivalCity": "Rennes",  "departureDate": {    "$date": {      "$numberLong": "1543017600000"    }  },  "departureTime": "16:00",  "price": 121,  "__v": 0},
+    {  "_id": {    "$oid": "62bd6c24fd5db53a2c9510f8"  },  "departureCity": "Melun",  "arrivalCity": "Paris",  "departureDate": {    "$date": {      "$numberLong": "1542672000000"    }  },  "departureTime": "10:00",  "price": 93,  "__v": 0}];
+  res.render('myLastTrips', {trips, session: req.session.user});
 })
 
 module.exports = router;

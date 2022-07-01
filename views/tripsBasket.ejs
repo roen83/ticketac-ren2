@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charssdelUTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <!-- Bootstrap CSS -->
@@ -17,37 +17,52 @@
     
     <%- include('navbar'); %>
 
-    <div class="home my-5 container-fluid">
+    <div class="home my-5 container">
 
-        <div class="col d-flex justify-content-center">
-
-            <% if (tripsAvailable != []) { %>
-
-                <ul class="row list-group col-10 col-md-8 ">
-              
-                    <% for(let i=0; i<tripsAvailable.length;i++){%>
-                      <li class="list-group-item d-flex justify-content-between align-items-center my-2 p-2">
-                        <p class="my-0" style="font-weight: bold">
-                            <%=tripsAvailable[i].departureCity%> / <%=tripsAvailable[i].arrivalCity%>
-                        </p>
-                        <div>
-                            train departure at : <%=tripsAvailable[i].departureTime%>
-                        </div>
-                        <p class="my-0" style="font-weight: bold">
-                          <%=tripsAvailable[i].price%> €
-                          <a class="btn btn-danger" href="/trips/addTrip?tripId=<%=tripsAvailable[i]._id.$oid%>" role="button">OK</a>
-                        </p>
-                      </li>
-      
-                    <%}%>
-      
-      
+        <div class="d-flex flex-column justify-content-center">
+            <div class="row my-3 text-light ml-5" style="font-weight: bold">My tickets</div>
+            <% if (trips != []) { 
+                let totalCmd = 0;%>
+            <div class="row">
+                <table class="table bg-light">
+                    <thead>
+                        <tr>
+                            <th scope="col">N°</th>
+                            <th scope="col">Journey</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Departure time</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (i=0; i<trips.length; i++){ %>
+                            <tr class="">
+                                <th scope="row"><%=i%></th>
+                                <td><%=trips[i].departureCity%> / <%=trips[i].arrivalCity%></td>
+                                <td><%=trips[i].departureDate%></td>
+                                <td><%=trips[i].departureTime%></td>
+                                <td><%=trips[i].price%> €</td>
+                            </tr>
+                        <% totalCmd += trips[i].price;
+                        } %>
+                        <tr class="" style="background-color:rgb(243,199,204)">
+                            <th scope="row">Total</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>xxx €</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="row justify-content-end">
+                <a href="/trips/checkout" class="btn btn-danger">Confirm</a>
+            </div>
                     
-                  </ul>
-
             <%} else { %>
                 <div class="row justify-content-center">
-                    <h3 class="text-danger">Oops ! No train available...</h3>
+                    <h3 class="text-danger">Your basket is empty...</h3>
                     <button class="btn btn-danger" href="/home">Home</button>
                 </div>
             <% } %>

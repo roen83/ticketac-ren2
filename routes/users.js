@@ -5,7 +5,7 @@ var router = express.Router();
 
 /* GET login page */
 router.get('/login', function(req, res, next) {
-  res.render('login', {erreur: null});
+  res.render('login', {erreur: null, session : req.session.user });
 })
 
 /* POST sign-up */
@@ -24,9 +24,9 @@ router.post('/sign-up', async function(req, res, next) {
     req.session.user = newUser;
     console.log('newUser :>> ', newUser);
     console.log('req.session.user :', req.session.user);
-    res.redirect('/home');
+    res.redirect('/home', {session: req.session.user });
   } else {
-    res.render('login', {erreur: "Cet email existe déjà!"})
+    res.render('login', {erreur: "Cet email existe déjà!", session: req.session.user})
   }
   
 })
@@ -40,10 +40,10 @@ router.post('/sign-in', async function(req, res, next) {
   });
   if (user != null) {
     req.session.user = user;
-    res.render('home', {erreur: null});
+    res.render('home', {erreur: null, session: req.session.user });
   } else {
     req.session.user = null;
-    res.render('login', {erreur: "Login invalide"});
+    res.render('login', {erreur: "Login invalide", session: req.session.user });
   }
 })
 
