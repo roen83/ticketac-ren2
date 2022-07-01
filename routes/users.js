@@ -5,7 +5,7 @@ var router = express.Router();
 
 /* GET login page */
 router.get('/login', function(req, res, next) {
-  res.render('login', {erreur: null, session : req.session.user });
+  res.render('login', {erreur: null, session : req.session.user, message: null });
 })
 
 /* POST sign-up */
@@ -26,9 +26,9 @@ router.post('/sign-up', async function(req, res, next) {
     req.session.trips = [];
     console.log('newUser :>> ', newUser);
     console.log('req.session.user :', req.session.user);
-    res.render('home', {session: req.session.user });
+    res.render('home', {session: req.session.user, message: null });
   } else {
-    res.render('login', {erreur: "Cet email existe déjà!", session: req.session.user})
+    res.render('login', {erreur: "Cet email existe déjà!", session: req.session.user, message: null})
   }
   
 })
@@ -43,10 +43,10 @@ router.post('/sign-in', async function(req, res, next) {
   if (user != null) {
     req.session.user = user;
     req.session.trips = [];
-    res.render('home', {erreur: null, session: req.session.user });
+    res.render('home', {erreur: null, session: req.session.user, message: null });
   } else {
     req.session.user = null;
-    res.render('login', {erreur: "Login invalide", session: req.session.user });
+    res.render('login', {erreur: "Login invalide", session: req.session.user, message: null });
   }
 })
 

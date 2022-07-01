@@ -19,7 +19,7 @@ router.get('/home', function(req, res, next) {
   //si login en session: home.ejs, sinon redirige vers /login
   console.log('req.session.user :>> ', req.session.user);
   if (req.session.user != null) {
-    res.render('home', {erreur: null, session: req.session.user});
+    res.render('home', {erreur: null, session: req.session.user, message: null});
   } else {
     res.redirect('/users/login');
   }

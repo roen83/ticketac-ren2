@@ -17,6 +17,15 @@
     
     <%- include('navbar'); %>
 
+<% if (message != null) { %>
+  
+        <div class="container d-flex justify-content-center">
+          <div class="row mt-5 text-light bg-success rounded p-3">
+            <p class=""><%= message %></p>
+          </div>
+        </div>
+<% } %>
+
     <div class="home my-5 ">
 
       <div class="row d-flex justify-content-center ">
