@@ -15,7 +15,8 @@ var formattedDateNext = new Date(date[2], date[1]-1, date[0]+1, 0);
 console.log('formattedDate :>> ', formattedDate);
   var tripsAvailable = await tripModel.find({ departureCity: req.body.fromCity, arrivalCity: req.body.toCity, departureDate: {$gte: formattedDate, $lte: formattedDateNext }});
 console.log(tripsAvailable);
-
+console.log("req.session.user :", req.session.user);
+console.log('message :>> ', message);
 
 
   res.render('tripsAvailable', {tripsAvailable, session: req.session.user, message: null});
