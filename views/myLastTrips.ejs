@@ -21,7 +21,7 @@
 
         <div class="d-flex flex-column justify-content-center">
             <div class="row my-3 text-light ml-5" style="font-weight: bold">My last trips</div>
-            <% if (trips != []) { %>
+            <% if (user.lastTrips != []) { %>
             <div class="row">
                 <table class="table bg-light">
                     <thead>
@@ -33,12 +33,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% for (i=0; i<trips.length; i++){ %>
+                        <% for (i=0; i<user.lastTrips.length; i++){ 
+                            var date = new Date(user.lastTrips[i].departureDate); %>
                             <tr class="">
-                                <td><%=trips[i].departureDate%></td>
-                                <td><%=trips[i].departureCity%> / <%=trips[i].arrivalCity%></td>
-                                <td><%=trips[i].departureTime%></td>
-                                <td><%=trips[i].price%> €</td>
+                                <td><%=`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`%></td>
+                                <td><%=user.lastTrips[i].departureCity%> / <%=user.lastTrips[i].arrivalCity%></td>
+                                <td><%=user.lastTrips[i].departureTime%></td>
+                                <td><%=user.lastTrips[i].price%> €</td>
                             </tr>
                         <% } %>
                     </tbody>

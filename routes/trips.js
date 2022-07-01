@@ -4,36 +4,47 @@ const { tripModel, userModel } = require('./bdd');
 
 /* GET tripsAvailable page */
 router.post('/tripsAvailable', async function(req, res, next) { 
-
-  var tripsAvailable = await tripModel.find({ departureCity: req.body.fromCity, arrivalCity: req.body.toCity, departureDate: new Date(req.body.dateFromFront) });
+  console.log(req.body);
+  var date = req.body.dateFromFront.split('/');
+console.log(date);
+var formattedDate = new Date(date[2], date[1]-1, date[0], 1);
+var formattedDateNext = new Date(date[2], date[1]-1, date[0]+1, 0);
+console.log('formattedDate :>> ', formattedDate);
+  var tripsAvailable = await tripModel.find({ departureCity: req.body.fromCity, arrivalCity: req.body.toCity, departureDate: {$gte: formattedDate, $lte: formattedDateNext }});
 console.log(tripsAvailable);
-console.log(req.body);
-console.log(new Date(req.body.dateFromFront));
+
+
 
   res.render('tripsAvailable', {tripsAvailable, session: req.session.user});
 })
 
 /* GET addTrip to basket page */
-router.get('/addTrip', function(req,res,next) {
-  console.log("add trip détecté");
-  req.session.trips.push(req.query.tripId);
-  res.render('tripsBasket', {trips: req.session.trips});
+router.get('/addTrip', async function(req,res,next) {
+  
+  var trip = await tripModel.findById(req.query.tripId);
+  
+  req.session.trips.push(trip);
+  console.log('req.session.trips :>> ', req.session.trips);
+  res.render('tripsBasket', {trips: req.session.trips, session: req.session.user});
 })
 
 /* GET checkout from trip basket page */
-router.get('/checkout', function(req, res, next){
+router.get('/checkout', async function(req, res, next){
   console.log("checkout détecté");
   var message = "Votre panier validé: bla-bla-bla...";
-  res.render('home', {erreur: null, message});
+  await userModel.updateOne({_id: req.session.user._id}, {lastTrips: ['62bd6c24fd5db53a2c9510f6']})
+  res.render('home', {erreur: null, message, session: req.session.user});
 })
 
 /* GET myLastTrips page */
-router.get('/myLastTrips', function(req,res,next){
+router.get('/myLastTrips', async function(req,res,next){
   console.log("myLastTrips détecté");
-  var trips = [
-    {  "_id": {    "$oid": "62bd6c24fd5db53a2c9510f6"  },  "departureCity": "Nantes",  "arrivalCity": "Rennes",  "departureDate": {    "$date": {      "$numberLong": "1543017600000"    }  },  "departureTime": "16:00",  "price": 121,  "__v": 0},
-    {  "_id": {    "$oid": "62bd6c24fd5db53a2c9510f8"  },  "departureCity": "Melun",  "arrivalCity": "Paris",  "departureDate": {    "$date": {      "$numberLong": "1542672000000"    }  },  "departureTime": "10:00",  "price": 93,  "__v": 0}];
-  res.render('myLastTrips', {trips, session: req.session.user});
+  //var trips = req.session.trips; // pour essayer
+  var userId = req.session.user._id
+  console.log('userId :>> ', userId);
+  var user = await userModel.findById(userId).populate('lastTrips');
+  console.log('user :>> ', user);
+  res.render('myLastTrips', {user, session: req.session.user});
 })
 
 module.exports = router;

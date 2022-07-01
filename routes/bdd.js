@@ -36,10 +36,10 @@ var tripSchema = mongoose.Schema({
     firstName: String,
     email: String, //unique
     password: String,
-    lastTrips: { 
+    lastTrips: [{ 
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'trips'
-    },
+    }],
   });
   
   var userModel = mongoose.model('users', userSchema);

@@ -35,11 +35,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% for (i=0; i<trips.length; i++){ %>
+                        <% for (i=0; i<trips.length; i++){ 
+                            var date = new Date(trips[i].departureDate);%>
                             <tr class="">
-                                <th scope="row"><%=i%></th>
+                                <th scope="row"><%=i+1%></th>
                                 <td><%=trips[i].departureCity%> / <%=trips[i].arrivalCity%></td>
-                                <td><%=trips[i].departureDate%></td>
+                                <td><%= `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}` %></td>
                                 <td><%=trips[i].departureTime%></td>
                                 <td><%=trips[i].price%> €</td>
                             </tr>
@@ -50,7 +51,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>xxx €</td>
+                            <td><%= totalCmd %> €</td>
                         </tr>
                     </tbody>
                 </table>

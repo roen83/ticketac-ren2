@@ -18,13 +18,15 @@ router.post('/sign-up', async function(req, res, next) {
       lastName: req.body.lastNameFromFront,
       firstName: req.body.firstNameFromFront,
       email: req.body.emailFromFront,
-      password: req.body.passwordFromFront
+      password: req.body.passwordFromFront,
+      lastTrips: []
     })
     await newUser.save();
     req.session.user = newUser;
+    req.session.trips = [];
     console.log('newUser :>> ', newUser);
     console.log('req.session.user :', req.session.user);
-    res.redirect('/home', {session: req.session.user });
+    res.render('home', {session: req.session.user });
   } else {
     res.render('login', {erreur: "Cet email existe déjà!", session: req.session.user})
   }
@@ -40,6 +42,7 @@ router.post('/sign-in', async function(req, res, next) {
   });
   if (user != null) {
     req.session.user = user;
+    req.session.trips = [];
     res.render('home', {erreur: null, session: req.session.user });
   } else {
     req.session.user = null;
