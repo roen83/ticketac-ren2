@@ -13,13 +13,16 @@ console.log(date);
 var formattedDate = new Date(date[2], date[1]-1, date[0], 1);
 var formattedDateNext = new Date(date[2], date[1]-1, date[0]+1, 0);
 console.log('formattedDate :>> ', formattedDate);
+var tripsTest = await tripModel.find();
+console.log('tripsTest :>> ', tripsTest);
   var tripsAvailable = await tripModel.find({ departureCity: req.body.fromCity, arrivalCity: req.body.toCity, departureDate: {$gte: formattedDate, $lte: formattedDateNext }});
 console.log(tripsAvailable);
 console.log("req.session.user :", req.session.user);
+var message = null;
 console.log('message :>> ', message);
 
 
-  res.render('tripsAvailable', {tripsAvailable, session: req.session.user, message: null});
+  res.render('tripsAvailable', {tripsAvailable, session: req.session.user, message});
   }
 })
 
