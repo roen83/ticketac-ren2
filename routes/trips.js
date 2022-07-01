@@ -1,17 +1,22 @@
 var express = require('express');
 var router = express.Router();
+const { tripModel, userModel } = require('./bdd');
 
 /* GET tripsAvailable page */
-router.post('/tripsAvailable', function(req, res, next) {
-  console.log('tripsAvailable détecté');
-  var tripsAvailable = ["test1", "test2"];
-  res.render('tripsAvailable', {tripsAvailable});
+router.post('/tripsAvailable', async function(req, res, next) { 
+
+  var tripsAvailable = await tripModel.find({ departureCity: req.body.fromCity, arrivalCity: req.body.toCity, departureDate: new Date(req.body.dateFromFront) });
+console.log(tripsAvailable);
+console.log(req.body);
+console.log(new Date(req.body.dateFromFront));
+
+  res.render('tripsAvailable', {tripsAvailable, session: req.session.user});
 })
 
 /* GET addTrip to basket page */
 router.get('/addTrip', function(req,res,next) {
   console.log("add trip détecté");
-  req.session.trips = ["test"];
+  req.session.trips.push(req.query.tripId);
   res.render('tripsBasket', {trips: req.session.trips});
 })
 
